@@ -11,18 +11,17 @@ B = coo_matrix((data, (row, row))).toarray()
 C = np.subtract(B, A)
 print(A, B, C, sep='\n\n')
 
-eigvalues, eigvectors = np.linalg.eigh(C)
-print('\n' + 'eigvector =')
-print(eigvectors[1])
-average = np.average(eigvectors[1])
-print("average = ", average)
+eigenvalues, eigenvectors = np.linalg.eigh(C)
+second_eigenvector = eigenvectors[:,1]
+print('\n' + 'eigenvector =')
+print(second_eigenvector)
+average = np.average(second_eigenvector)
+print("average =", average)
 
 first_graph = []
 second_graph = []
 
-eigvector = eigvectors[1].tolist()
-
-for index, eigvalue in enumerate(eigvector):
+for index, eigvalue in enumerate(second_eigenvector):
 	if eigvalue < average:
 		first_graph.append(index)
 	else:
