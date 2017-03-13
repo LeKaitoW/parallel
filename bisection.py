@@ -1,6 +1,9 @@
 import numpy as np
 from scipy.sparse import coo_matrix
 
+nodes = {0:4, 1:7, 2:8, 3:10, 4:11, 5:12, 6:17, 7:18, 8:19, 9:20,
+		 10:21, 11:22, 12:23, 13:24}
+
 data = np.array([1]*34)
 row = np.array([0]*2+[1]*2+[2]*3+[3]*1+[4]*3+[5]*2+[6]*3+[7]*3+[8]*3+[9]*2 +
 			   [10]*2+[11]*3+[12]*3+[13]*2)
@@ -23,9 +26,9 @@ second_graph = []
 
 for index, eigvalue in enumerate(second_eigenvector):
 	if eigvalue < average:
-		first_graph.append(index)
+		first_graph.append(nodes.get(index))
 	else:
-		second_graph.append(index)
+		second_graph.append(nodes.get(index))
 
 print('first graph:', first_graph)
 print('second graph:', second_graph)
