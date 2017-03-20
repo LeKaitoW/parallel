@@ -33,32 +33,48 @@ class Point:
 
 
 def decomposition_p():
-    subdomains = []
+    subdomains = [0, ]
     current = 0
     for i in range(N):
         current += x_max / N
         subdomains.append(current)
     z = math.ceil(Z / N)
+    points_list = create_points(points)
+
+    points_dict = {}
+    i = 0
+    while i < N:
+        for point in points_list:
+            if point in points_dict:
+                continue
+            left = subdomains[i]
+            right = subdomains[i+1]
+            is_last = (i == N-1)
+            if (left <= point.x_one < right) or (is_last and point.x_one == right):
+                if point.x_two - a * point.x_one + b >= 0:
+                    points_dict.update({point: i})
+        i += 1
 
 
-def create_points():
+def create_points(points):
     points_list = []
     x_one = 0
     x_two = 0
-    delta = 1 / points
+    delta = 1 / (points - 1)
     for i in range(points):
+        x_one = 0
         for j in range(points):
             points_list.append(Point(x_one, x_two))
             x_one += delta
         x_two += delta
+    return points_list
 
 
-create_points()
 decomposition_p()
 
 plot.plot([x_max, x_max])
 plot.plot([x_max, x_max], [x_min, x_max])
-x_1 = np.arange(x_min, x_max+0.1, 0.05)
+x_1 = np.arange(x_min, x_max + 0.1, 0.05)
 plot.plot(x_1, a * x_1 + b, 'r--')
 plot.axis([0, 1.5, 0, 1.5])
 plot.show()
